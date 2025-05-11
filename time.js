@@ -2,11 +2,14 @@ let rsc = 0;
 let bsc = 0;
 let rtime = 120;
 let btime = 120;
+let mtime = 30;
 let rtimer = setInterval(rclock,1000);
 let btimer = null;
+let mtimer = setInterval(mclock,1000);
 
 
 function toggle(){
+    mtime = 30;
     if (turn === "red"){
         clearInterval(rtimer);
         rtimer = null;
@@ -23,6 +26,24 @@ function toggle(){
         }
         finish();   
     }
+}
+function mclock(){
+    let mins = Math.floor(mtime/60);
+    let secs = mtime % 60;
+    document.getElementById("movet").textContent = `${mins}:${secs.toString().padStart(2,'0')}`;
+
+    if(mtime===0){
+        document.getElementById("movet").textContent = `0:00`;
+        clearInterval(mtimer);
+        mtimer=null;
+        if(turn==="red"){
+            window.alert("You took too long for a move.Blue wins!!");
+        }
+        else if(turn==="blue"){
+            window.alert("You took too long for a move.Red wins!!");
+        }
+    }
+    mtime-=1;
 }
 
 function rclock(){
@@ -74,6 +95,8 @@ function bclock(){
 
 function pause(){
     if (!paused){
+    clearInterval(mtimer);
+    mtimer = null;
     if (turn === "red"){
         clearInterval(rtimer);
         rtimer = null;
@@ -87,6 +110,8 @@ function pause(){
 }
 function resume(){
     if (paused){
+    mtimer = setInterval(mclock,1000);
+
     if (turn === "blue"){
         if (btimer === null){
             btimer = setInterval(bclock,1000);
