@@ -100,6 +100,21 @@ function placementstage(callback,num){
                 callback(move,num);
             }
         }
+        setTimeout(()=>{
+            if (inner===6){
+                finish();
+                if(rsc>bsc){
+                    window.alert("Red wins");
+                }
+                else if (bsc>rsc){
+                    window.alert("Blue wins");
+                }
+                else{
+                    window.alert("Draw");
+                }
+                reset()
+            }
+        });
     }
 
     console.log(outer);
@@ -147,6 +162,7 @@ function move(num1,num2){
     if (middle === 6){innerunlocked = true;}
         }
     }
+
 
 
     if (!paused){
