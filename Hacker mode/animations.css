@@ -1,0 +1,3 @@
+@keyframes SlideLeft {
+    from{transform:translateX(20vw)}
+}
